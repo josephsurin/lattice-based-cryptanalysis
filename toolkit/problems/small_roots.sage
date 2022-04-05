@@ -117,7 +117,7 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
     verbose('Lattice dimensions:', B.dimensions())
     lattice_reduction_timer = cputime()
     if lattice_reduction:
-        B = lattice_reduction(B)
+        B = lattice_reduction(B.dense_matrix())
     else:
         B = B.dense_matrix().LLL()
     verbose(f'Lattice reduction took {cputime(lattice_reduction_timer):.3f}s')
