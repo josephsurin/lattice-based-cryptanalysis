@@ -1,4 +1,3 @@
-from sage.modules.free_module_integer import IntegerLattice
 load('../problems/small_roots.sage')
 
 
