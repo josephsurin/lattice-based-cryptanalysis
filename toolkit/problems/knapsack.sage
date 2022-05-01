@@ -1,4 +1,4 @@
-def subset_sum(weights, targets, modulus=None, lattice_reduction=None, verbose=False):
+def subset_sum(weights, targets, modulus=None, N=None, lattice_reduction=None, verbose=False):
     r"""
     Returns the solution of the subset sum problem with the given ``weights``
     and ``targets``. Supports multiple knapsacks as well as the modular case
@@ -15,6 +15,9 @@ def subset_sum(weights, targets, modulus=None, lattice_reduction=None, verbose=F
     `s_1, \ldots, s_j` for the multiple subset sum problem case.
 
     - ``modulus`` -- (optional) The modulus `M`.
+
+    - ``N`` -- (optional) The scaling factor `N` as described in [1].
+    (Default: `\lceil \sqrt{(n+1)/4} \rceil`)
 
     OUTPUT:
 
@@ -53,8 +56,8 @@ def subset_sum(weights, targets, modulus=None, lattice_reduction=None, verbose=F
         density = n / (k * log(max(flatten(weights)), 2))
     verbose('Density:', round(density.n(), 4))
 
-    N = ceil(sqrt((n+1)/4))
-    B = 2*Matrix.identity(n)
+    N = N or ceil(sqrt((n+1)/4))
+    B = 2 * Matrix.identity(n)
     B = B.augment(vector([0] * n))
     for j in range(k):
         B = B.augment(vector([N * a for a in weights[j]]))
@@ -79,9 +82,11 @@ def subset_sum(weights, targets, modulus=None, lattice_reduction=None, verbose=F
             continue
         for j in range(k):
             t = sum(e * a for e, a in zip(sol, weights[j]))
+            tj = targets[j]
             if modulus > 0:
                 t %= modulus
-            if t != targets[j]:
+                tj %= modulus
+            if t != tj:
                 break
         else:
             return sol
