@@ -11,12 +11,7 @@ def bleichenbacher_lattice_attack(N, e, c, O_B):
     NUM_QUERIES = 0
     l = N.nbits()
 
-    ell = 1
-    while True:
-        if l - 16 < int((l + l * ell - 32) / (ell + 2)):
-            break
-        ell += 1
-    ell = int(1.25 * ell)
+    ell = int(1.3 * l / 16)
     print(f'  Using ell = {ell}')
 
     R = []
@@ -40,7 +35,7 @@ def bleichenbacher_lattice_attack(N, e, c, O_B):
 if __name__ == '__main__':
 
     print('Bleichenbacher attack (lattice version)')
-    p, q = random_prime(2^192, lbound=2^191), random_prime(2^192, lbound=2^191)
+    p, q = random_prime(2^512, lbound=2^511), random_prime(2^512, lbound=2^511)
     N = p * q
     e = 0x10001
     d = pow(e, -1, (p - 1) * (q - 1))
