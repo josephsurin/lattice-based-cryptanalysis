@@ -1,4 +1,7 @@
-load('../problems/small_roots.sage')
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
+from lbc_toolkit import small_roots
 
 
 def univariate_example():

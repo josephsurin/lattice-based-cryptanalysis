@@ -1,37 +1,7 @@
-load('../problems/hidden_number_problem.sage')
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
-
-def ecdsa_biased_nonce_zero_msb(Z, R, S, n, l):
-    T = [ZZ(pow(s, -1, n) * r % n) for s, r in zip(S, R)]
-    A = [ZZ(-pow(s, -1, n) * z % n) for s, z in zip(S, Z)]
-    B = 2^(n.nbits() - l)
-    d = hnp(n, T, A, B, verbose=True)
-    return d
-
-
-def ecdsa_biased_nonce_zero_lsb(Z, R, S, n, l):
-    T = [ZZ(pow(2, -l, n) * pow(s, -1, n) * r % n) for s, r in zip(S, R)]
-    A = [ZZ(-pow(2, -l, n) * pow(s, -1, n) * z % n) for s, z in zip(S, Z)]
-    B = 2^(n.nbits() - l)
-    d = hnp(n, T, A, B, verbose=True)
-    return d
-
-
-def ecdsa_biased_nonce_known_msb(Z, R, S, T, n, l):
-    T_ = [ZZ(pow(s, -1, n) * r % n) for s, r in zip(S, R)]
-    A = [ZZ(-pow(2, l, n) * t - pow(s, -1, n) * z % n) for s, z, t in zip(S, Z, T)]
-    B = 2^(n.nbits() - l)
-    d = hnp(n, T_, A, B, verbose=True)
-    return d
-
-
-def ecdsa_biased_nonce_shared_msb(Z, R, S, n, l):
-    z1, r1, s1 = Z[0], R[0], S[0]
-    T = [ZZ((pow(s, -1, n) * r - pow(s1, -1, n) * r1) % n) for s, r in zip(S[1:], R[1:])]
-    A = [ZZ((pow(s1, -1, n) * z1 - pow(s, -1, n) * z) % n) for s, z in zip(S[1:], Z[1:])]
-    B = 2^(n.nbits() - l)
-    d = hnp(n, T, A, B, verbose=True)
-    return d
+from lbc_toolkit import ecdsa_biased_nonce_zero_msb, ecdsa_biased_nonce_zero_lsb, ecdsa_biased_nonce_known_msb, ecdsa_biased_nonce_shared_msb
 
 
 if __name__ == '__main__':
@@ -83,7 +53,7 @@ if __name__ == '__main__':
     for i in range(ell):
         z = randrange(1, n)
         t = randrange(1, 2^l)
-        k = 2^l * t + randrange(1, 2^(n.nbits() - l))
+        k = 2^(n.nbits() - l) * t + randrange(1, 2^(n.nbits() - l))
         X = k * G
         r = int(X.xy()[0]) % n
         s = pow(k, -1, n) * (z + r * d_) % n
@@ -101,7 +71,7 @@ if __name__ == '__main__':
     t = randrange(1, 2^l)
     for i in range(ell):
         z = randrange(1, n)
-        k = 2^l * t + randrange(1, 2^(n.nbits() - l))
+        k = 2^(n.nbits() - l) * t + randrange(1, 2^(n.nbits() - l))
         X = k * G
         r = int(X.xy()[0]) % n
         s = pow(k, -1, n) * (z + r * d_) % n

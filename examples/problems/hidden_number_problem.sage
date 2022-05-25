@@ -1,4 +1,7 @@
-load('../problems/hidden_number_problem.sage')
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
+from lbc_toolkit import hnp, ehnp
 
 
 def hnp_example():

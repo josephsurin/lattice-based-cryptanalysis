@@ -1,39 +1,6 @@
 import itertools
 from sage.rings.polynomial.multi_polynomial_sequence import PolynomialSequence
 
-# The method of taking resultants may fail to find a solution sometimes as there
-# is no guarantee for two polynomials to be algebraically independent.
-# TODO: error handling when solution doesn't exist
-def solve_system_with_resultants(H, vs):
-    if len(vs) == 1:
-        for h in (h for h in H if h != 0):
-            roots = h.univariate_polynomial().roots()
-            if roots and roots[0][0] != 0:
-                return { h.variable(): roots[0][0] }
-    else:
-        v = min(vs, key=lambda v: sum(h.degree(v) for h in H))
-        H_ = [H[i].resultant(H[i+1], v) for i in range(len(vs) - 1)]
-        vs.remove(v)
-        roots = solve_system_with_resultants(H_, vs)
-        H_ = [h.subs(roots) for h in H]
-        roots |= solve_system_with_resultants(H_, [None])
-        return roots
-
-
-def solve_system_with_gb(H, vs):
-    H_ = PolynomialSequence([], H[0].parent().change_ring(QQ))
-    for h in H:
-        H_.append(h)
-        I = H_.ideal()
-        if I.dimension() == -1:
-            H_.pop()
-        elif I.dimension() == 0:
-            roots = []
-            for root in I.variety(ring=ZZ):
-                root = tuple(H[0].parent().base_ring()(root[var]) for var in vs)
-                roots.append(root)
-            return roots
-
 
 def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=None, verbose=False):
     r"""
@@ -79,6 +46,9 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
     """
 
     verbose = (lambda *a: print('[small_roots]', *a)) if verbose else lambda *_: None
+
+    if algorithm not in ['groebner', 'resultants']:
+        raise ValueError(f'"{algorithm}" is not a valid algorithm. Specify one of "groebner" or "resultants".')
 
     if d is None:
         d = f.degree()
@@ -134,6 +104,7 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
         roots = solve_system_with_gb(H, list(f.variables()))
         verbose(f'Solving system with Groebner bases took {cputime(groebner_timer):.3f}s')
         return roots
+
     elif algorithm == 'resultants':
         resultants_timer = cputime()
         roots = solve_system_with_resultants(H, list(f.variables()))
@@ -142,5 +113,3 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
             return []
 
         return [tuple(map(R, map(roots.__getitem__, f.variables())))]
-    else:
-        raise ValueError(f'"{algorithm}" is not a valid algorithm. Specify one of "groebner" or "resultants".')

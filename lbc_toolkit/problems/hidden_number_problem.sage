@@ -1,5 +1,3 @@
-load('../common/babai_cvp.sage')
-
 def hnp(p, T, A, B, lattice_reduction=None, verbose=False):
     r"""
     Returns the solution of the given hidden number problem instance. i.e. finds

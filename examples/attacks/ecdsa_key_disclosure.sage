@@ -1,12 +1,7 @@
-load('../problems/hidden_number_problem.sage')
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
-
-def ecdsa_key_disclosure(dbar, n, Z, R, S, Kbar, Pi, Nu, Lambda, Mu):
-    Alpha = [ZZ(r) for r in R]
-    Rho = [[ZZ(-pow(2, Lambda[i][j], n) * S[i] % n) for j in range(len(Lambda[0]))] for i in range(len(Lambda))]
-    Beta = [ZZ((S[i] * Kbar[i] - Z[i]) % n) for i in range(len(Z))]
-    d = ehnp(dbar, n, Pi, Nu, Alpha, Rho, Mu, Beta, verbose=True)
-    return d
+from lbc_toolkit import ecdsa_key_disclosure
 
 
 if __name__ == '__main__':

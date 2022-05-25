@@ -1,5 +1,9 @@
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
 from sage.modules.free_module_integer import IntegerLattice
-load('../problems/knapsack.sage')
+
+from lbc_toolkit import subset_sum
 
 
 def subset_sum_example():
