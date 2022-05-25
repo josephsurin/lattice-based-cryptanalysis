@@ -10,7 +10,7 @@
     * [boneh_durfee](#boneh_durfee)
     * [ecdsa_biased_nonce](#ecdsa_biased_nonce)
     * [ecdsa_key_disclosure](#ecdsa_key_disclosure)
-    * [ecdsa_nonce_as_hash_xor_privkey](#ecdsa_nonce_as_hash_xor_privkey)
+    * [ecdsa_nonce_hash_xor_privkey](#ecdsa_nonce_hash_xor_privkey)
     * [partial_key_exposure_rsa](#partial_key_exposure_rsa)
     * [rsa_stereotyped_message](#rsa_stereotyped_message)
 * [References](#references)
@@ -299,7 +299,7 @@ The (EC)DSA private signing key $d$.
 
 
 
-## ecdsa_nonce_as_hash_xor_privkey
+## ecdsa_nonce_hash_xor_privkey
 
 ```py
 ecdsa_nonce_hash_xor_privkey(Z, R, S, n)
