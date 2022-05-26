@@ -154,7 +154,7 @@ The implementation follows the algorithm as described in [HR07].
 
 &nbsp;&nbsp;&bull;&nbsp; `Beta` - A list of $d$ integers representing the $\beta_i$.
 
-&nbsp;&nbsp;&bull;&nbsp; `delta` - (optional) The $\delta$ parameter used in lattice construction. See [HR07] for details on how to choose $\delta$. (Default: `1/10^8`)
+&nbsp;&nbsp;&bull;&nbsp; `delta` - (optional) The $\delta$ parameter used in lattice construction. See [HR07] for details on how to choose $\delta$. (Default: `1e-8 / kappa`)
 
 **Returns:**
 

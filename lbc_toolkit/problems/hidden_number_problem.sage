@@ -143,7 +143,7 @@ def ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, delta=None, lattice_reduction=No
     D = d + m + L
     kappa = (2^(D / 4) * (m + L)^(1 / 2) + 1) / 2
     if not delta:
-        delta = 1 / 10^8
+        delta = RR(1e-8 / kappa)
 
     verbose(f'kappa * delta = {(kappa * delta).n()}')
     if not 0 < kappa * delta < 1:
@@ -179,5 +179,5 @@ def ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, delta=None, lattice_reduction=No
         x_j = u[d + j] * 2^Nu[j] / delta
         x += ZZ(x_j) * 2^Pi[j]
 
-    # TODO: Check if valid solution.
+    # TODO: Check if valid solution. -x might be returned instead.
     return x % p
