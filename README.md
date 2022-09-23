@@ -1,6 +1,6 @@
 # Lattice-based Cryptanalysis Toolkit
 
-This repository implements a toolkit for cryptanalysis using lattice reduction built for experimenting and learning.
+This repository implements a toolkit for cryptanalysis using lattice reduction built for experimenting and learning. Check out the accompanying [tutorial](./tutorial.pdf) for some background.
 
 
 ## Basic usage
