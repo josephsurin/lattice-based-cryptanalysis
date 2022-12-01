@@ -63,8 +63,26 @@ def divisor_modulus_example():
     print('  Found  solution:', sol, end='\n\n')
 
 
+# From discussions in CryptoHack Discord:
+# https://discord.com/channels/692694094111309866/695298174985961493/1047592947710967858
+def bivariate_jacobian_example():
+    print('Bivariate Jacobian Example')
+    p, q = random_prime(2^1024), random_prime(2^1024)
+    N = p * q
+    L = 128
+    known = (p % 2^(1024 - L)) >> L
+    roots = [p % 2^L, p >> (1024 - L)]
+    P.<x, y> = PolynomialRing(Integers(N))
+    f = y * 2^(1024 - L) + known * 2^L + x
+    bounds = (2^L, 2^L)
+    sol = small_roots(f, bounds, m=3, d=4, algorithm='jacobian', verbose=True)
+    print('  Actual solution:', roots)
+    print('  Found  solution:', sol, end='\n\n')
+
+
 if __name__ == '__main__':
     univariate_example()
     bivariate_example()
     integers_example()
     divisor_modulus_example()
+    bivariate_jacobian_example()

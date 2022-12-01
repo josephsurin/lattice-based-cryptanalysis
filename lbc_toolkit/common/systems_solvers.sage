@@ -31,3 +31,26 @@ def solve_system_with_gb(H, vs):
                 root = tuple(H[0].parent().base_ring()(root[var]) for var in vs)
                 roots.append(root)
             return roots
+
+
+# From https://gist.github.com/hyunsikjeong/0c26e83bb37866f5c7c6b8918a854333
+def solve_system_with_jacobian(H, f, bounds, iters=100, prec=200):
+    vs = list(f.variables())
+    n = f.nvariables()
+    x = f.parent().objgens()[1]
+    x_ = [var(str(vs[i])) for i in range(n)]
+    for ii in Combinations(range(len(H)), k=n):
+        f = symbolic_expression([H[i](x) for i in ii]).function(x_)
+        jac = jacobian(f, x_)
+        v = vector([t // 2 for t in bounds])
+        for _ in range(iters):
+            kwargs = {str(vs[i]): v[i] for i in range(n)}
+            try:
+                tmp = v - jac(**kwargs).inverse() * f(**kwargs)
+            except ZeroDivisionError:
+                return None
+            v = vector((numerical_approx(d, prec=prec) for d in tmp))
+        v = [int(_.round()) for _ in v]
+        if H[0](v) == 0:
+            return tuple(v)
+    return None

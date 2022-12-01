@@ -74,7 +74,7 @@ Note that in some cases this algorithm may be used to find small roots of polyno
 
 &nbsp;&nbsp;&bull;&nbsp; `d` - The number of variables to use for extra shifts. If `None`, the degree of `f` is used. (Default: `None`)
 
-&nbsp;&nbsp;&bull;&nbsp; `algorithm` - The technique used to solve the system of equations after the lattice reduction step. Must be one of `'groebner'` or `'resultants'` or else a `ValueError` exception is raised.
+&nbsp;&nbsp;&bull;&nbsp; `algorithm` - The technique used to solve the system of equations after the lattice reduction step. Must be one of `'groebner'` or `'resultants'` or `'jacobian'` or else a `ValueError` exception is raised. (Default: `'groebner'`)
 
 **Returns:**
 
