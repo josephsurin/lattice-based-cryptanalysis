@@ -27,7 +27,7 @@ def bivariate_example():
     monomials = [x, y, x*y, x^2, y^2]
     f = sum(randrange(N) * monomial for monomial in monomials)
     f -= f(*roots)
-    sol = small_roots(f, bounds, m=2, algorithm='resultants', verbose=True)
+    sol = small_roots(f, bounds, m=2, algorithm='groebner', verbose=True)
     print('  Actual solution:', roots)
     print('  Found  solution:', sol, end='\n\n')
 
