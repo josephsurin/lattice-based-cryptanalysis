@@ -74,13 +74,15 @@ Note that in some cases this algorithm may be used to find small roots of polyno
 
 &nbsp;&nbsp;&bull;&nbsp; `d` - The number of variables to use for extra shifts. If `None`, the degree of `f` is used. (Default: `None`)
 
-&nbsp;&nbsp;&bull;&nbsp; `algorithm` - The technique used to solve the system of equations after the lattice reduction step. Must be one of `'groebner'` or `'resultants'` or `'jacobian'` or else a `ValueError` exception is raised. (Default: `'groebner'`)
+&nbsp;&nbsp;&bull;&nbsp; `algorithm` - The technique used to solve the system of equations after the lattice reduction step. Must be one of `'groebner'` or `'msolve'` or `'resultants'` or `'jacobian'` or else a `ValueError` exception is raised. (Default: `'groebner'`)
 
 **Returns:**
 
 A list of tuples containing all roots that were found. If no roots were found, the empty list is returned.
 
+**Notes:**
 
+Setting `algorithm='msolve'` attempts to use the [msolve](https://msolve.lip6.fr/) library which needs to be installed on the system (`msolve` needs to be in the path). This tends to be faster than using just the default Sage `'groebner'` algorithm (see the `small_roots` [examples](../examples/problems/small_roots.sage)). If you encounter `NotImplementedError("unsupported msolve output format: [...]")`, ensure you have the latest version of `msolve` installed.
 
 ## hnp
 

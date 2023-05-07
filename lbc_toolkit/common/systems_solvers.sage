@@ -18,8 +18,8 @@ def solve_system_with_resultants(H, vs):
         return roots
 
 
-# Requires https://msolve.lip6.fr/binaries/index.html
-def solve_system_with_gb(H, vs):
+# Requires https://msolve.lip6.fr/binaries/index.html for msolve=True
+def solve_system_with_gb(H, vs, msolve=False):
     H_ = PolynomialSequence([], H[0].parent().change_ring(QQ))
     for h in H:
         H_.append(h)
@@ -28,7 +28,11 @@ def solve_system_with_gb(H, vs):
             H_.pop()
         elif I.dimension() == 0:
             roots = []
-            for root in I.variety(ring=QQ, algorithm='msolve', proof=False):
+            if msolve:
+                V = I.variety(ring=QQ, algorithm='msolve', proof=False)
+            else:
+                V = I.variety(ring=QQ, proof=False)
+            for root in V:
                 root = tuple(H[0].parent().base_ring()(root[var]) for var in vs)
                 roots.append(root)
             return roots

@@ -27,7 +27,7 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
     ``f`` is used. (Default: ``None``)
 
     - ``algorithm`` -- The technique used to solve the system of equations after the
-    lattice reduction step. Must be one of 'groebner' or 'resultants' or 'jacobian' or else a ``ValueError``
+    lattice reduction step. Must be one of 'groebner' or 'msolve' or 'resultants' or 'jacobian' or else a ``ValueError``
     exception is raised.
 
     OUTPUT:
@@ -47,8 +47,8 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
 
     verbose = (lambda *a: print('[small_roots]', *a)) if verbose else lambda *_: None
 
-    if algorithm not in ['groebner', 'resultants', 'jacobian']:
-        raise ValueError(f'"{algorithm}" is not a valid algorithm. Specify one of "groebner" or "resultants" or "jacobian".')
+    if algorithm not in ['groebner', 'msolve', 'resultants', 'jacobian']:
+        raise ValueError(f'"{algorithm}" is not a valid algorithm. Specify one of "groebner" or "msolve" or "resultants" or "jacobian".')
 
     if d is None:
         d = f.degree()
@@ -103,6 +103,12 @@ def small_roots(f, bounds, m=1, d=None, algorithm='groebner', lattice_reduction=
         groebner_timer = cputime()
         roots = solve_system_with_gb(H, list(f.variables()))
         verbose(f'Solving system with Groebner bases took {cputime(groebner_timer):.3f}s')
+        return roots
+
+    elif algorithm == 'msolve':
+        msolve_time = cputime()
+        roots = solve_system_with_gb(H, list(f.variables()), msolve=True)
+        verbose(f'Solving system with Groebner (msolve) bases took {cputime(msolve_time):.3f}s')
         return roots
 
     elif algorithm == 'resultants':

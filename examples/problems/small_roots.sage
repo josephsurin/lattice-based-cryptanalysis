@@ -80,9 +80,25 @@ def bivariate_jacobian_example():
     print('  Found  solution:', sol, end='\n\n')
 
 
+# much faster than bivariate_example
+def bivariate_msolve_example():
+    print('Bivariate msolve Example')
+    N = random_prime(2^512) * random_prime(2^512)
+    bounds = (floor(N^0.16), floor(N^0.16))
+    roots = tuple(randrange(bound) for bound in bounds)
+    P.<x, y> = PolynomialRing(Zmod(N))
+    monomials = [x, y, x*y, x^2, y^2]
+    f = sum(randrange(N) * monomial for monomial in monomials)
+    f -= f(*roots)
+    sol = small_roots(f, bounds, m=2, algorithm='msolve', verbose=True)
+    print('  Actual solution:', roots)
+    print('  Found  solution:', sol, end='\n\n')
+
+
 if __name__ == '__main__':
     univariate_example()
     bivariate_example()
     integers_example()
     divisor_modulus_example()
     bivariate_jacobian_example()
+    bivariate_msolve_example()
