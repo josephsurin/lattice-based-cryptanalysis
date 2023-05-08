@@ -1,2 +1,4 @@
 __pycache__
 *.sage.py
+build/
+lbc_toolkit.egg-info/
