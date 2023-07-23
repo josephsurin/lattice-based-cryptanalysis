@@ -177,7 +177,7 @@ def ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, delta=None, lattice_reduction=No
     x = xbar
     for j in range(m):
         x_j = u[d + j] * 2^Nu[j] / delta
-        x += ZZ(x_j) * 2^Pi[j]
+        x += int(x_j) * 2^Pi[j]
 
     # TODO: Check if valid solution. -x might be returned instead.
     return x % p
