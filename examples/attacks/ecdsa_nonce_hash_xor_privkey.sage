@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from lbc_toolkit import ecdsa_nonce_hash_xor_privkey
 

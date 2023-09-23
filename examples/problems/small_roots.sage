@@ -1,7 +1,7 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
-from lbc_toolkit import small_roots
+from lbc_toolkit import small_roots, flatter
 
 
 def univariate_example():
@@ -43,7 +43,7 @@ def integers_example():
     f -= f(*roots)
     assert f(*bounds) < N^2
     P.<x, y> = PolynomialRing(Zmod(N^2))
-    sol = small_roots(P(f), bounds, verbose=True)
+    sol = small_roots(P(f), bounds, lattice_reduction=flatter, verbose=True)
     print('  Actual solution:', roots)
     print('  Found  solution:', sol, end='\n\n')
 

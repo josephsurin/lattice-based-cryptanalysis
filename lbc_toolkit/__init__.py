@@ -4,6 +4,7 @@ loadfile = lambda f: load(os.path.join(os.path.dirname(__file__), f))
 
 loadfile('common/babai_cvp.sage')                       # babai_cvp
 loadfile('common/systems_solvers.sage')                 # solve_system_with_resultants, solve_system_with_gb, solve_system_with_jacobian
+loadfile('common/flatter.sage')                         # flatter
 
 loadfile('problems/hidden_number_problem.sage')         # hnp, ehnp
 loadfile('problems/knapsack.sage')                      # subset_sum

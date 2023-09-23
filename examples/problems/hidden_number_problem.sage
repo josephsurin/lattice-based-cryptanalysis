@@ -1,8 +1,14 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from lbc_toolkit import hnp, ehnp
 
+def flatter(M):
+    from subprocess import check_output
+    from re import findall
+    z = "[[" + "]\n[".join(" ".join(map(str, row)) for row in M) + "]]"
+    ret = check_output(["flatter"], input=z.encode())
+    return matrix(M.nrows(), M.ncols(), map(int, findall(b"-?\\d+", ret)))
 
 def hnp_example():
     print('HNP Example')
@@ -29,7 +35,7 @@ def ehnp_2holes_example():
     _K = [[randrange(1, 2^Mu[i][0]), randrange(1, 2^Mu[i][1])] for i in range(d)]
     Beta = [(alpha_i * _x + Rho_i[0] * K_i[0] + Rho_i[1] * K_i[1]) % p
             for alpha_i, Rho_i, K_i in zip(Alpha, Rho, _K)]
-    sol = ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, verbose=True)
+    sol = ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, delta=1/10^12, verbose=True)
     print('  Actual solution:', _x)
     print('  Found  solution:', sol, end='\n\n')
 
@@ -48,7 +54,7 @@ def ehnp_example():
     _K = [[randrange(1, 2^mu_i_j) for mu_i_j in Mu_i] for Mu_i in Mu]
     Beta = [(alpha_i * _x + sum(rho_i_j * k_i_j for rho_i_j, k_i_j in zip(Rho_i, K_i))) % p
             for alpha_i, Rho_i, K_i in zip(Alpha, Rho, _K)]
-    sol = ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, verbose=True)
+    sol = ehnp(xbar, p, Pi, Nu, Alpha, Rho, Mu, Beta, delta=1/10^12, verbose=True)
     print('  Actual solution:', _x)
     print('  Found  solution:', sol, end='\n\n')
 

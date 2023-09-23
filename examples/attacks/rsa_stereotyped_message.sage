@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from lbc_toolkit import rsa_stereotyped_message, rsa_stereotyped_message_multi
 

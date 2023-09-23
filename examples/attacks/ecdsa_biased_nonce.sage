@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from lbc_toolkit import ecdsa_biased_nonce_zero_msb, ecdsa_biased_nonce_zero_lsb, ecdsa_biased_nonce_known_msb, ecdsa_biased_nonce_shared_msb
 

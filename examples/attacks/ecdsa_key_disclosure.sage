@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from lbc_toolkit import ecdsa_key_disclosure
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         Kbar.append(kbar)
 
     Pi = [0, 12, 30, 74]
-    Nu = [10, 16, 24, 50]
+    Nu = [10, 16, 24, 108]
     mask = 2^256 - 1 - sum(2^pi_j * (2^nu_j - 1) for pi_j, nu_j in zip(Pi, Nu))
     dbar = d_ & mask
 
