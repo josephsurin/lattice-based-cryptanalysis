@@ -1,6 +1,6 @@
 [project]
 name = "lbc_toolkit"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
     "sagemath-standard >= 9.8",
 ]
